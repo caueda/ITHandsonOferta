@@ -1,4 +1,4 @@
-package com.example.ithandsonoferta.domain;
+package com.example.ithandsonoferta.domain.mongodb;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

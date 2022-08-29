@@ -1,6 +1,6 @@
 package com.example.ithandsonoferta.service;
 
-import com.example.ithandsonoferta.domain.Oferta;
+import com.example.ithandsonoferta.domain.mongodb.Oferta;
 import com.example.ithandsonoferta.repository.OfertaRepository;
 import org.springframework.stereotype.Service;
 

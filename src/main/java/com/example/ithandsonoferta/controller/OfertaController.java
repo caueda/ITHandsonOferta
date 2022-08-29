@@ -1,6 +1,6 @@
 package com.example.ithandsonoferta.controller;
 
-import com.example.ithandsonoferta.domain.Oferta;
+import com.example.ithandsonoferta.domain.mongodb.Oferta;
 import com.example.ithandsonoferta.service.OfertaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
