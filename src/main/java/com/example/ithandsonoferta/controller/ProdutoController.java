@@ -1,34 +1,28 @@
 package com.example.ithandsonoferta.controller;
 
-import com.example.ithandsonoferta.domain.mysql.Produto;
-import com.example.ithandsonoferta.service.ProdutoService;
+import com.example.ithandsonoferta.domain.dto.Produto;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/api/v1/produto")
 public class ProdutoController {
-    private ProdutoService produtoService;
+    private RestTemplate restTemplate;
 
-    public ProdutoController(ProdutoService produtoService) {
-        this.produtoService = produtoService;
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Produto>> findAll() {
-        return ResponseEntity.ok(produtoService.findAllOrderByNome());
-    }
-
-    @GetMapping("/{nome}")
-    public ResponseEntity<List<Produto>> findAllByName(@PathVariable("nome") String nome) {
-        return ResponseEntity.ok(produtoService.findAllByNomeContainsIgnoreCase(nome));
+    private static final String WALKTHROUGHJAVA_API = "http://localhost:8888/api/produto";
+    public ProdutoController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     @PostMapping
     public ResponseEntity<?> saveOrUpdate(@RequestBody Produto produto) {
-        this.produtoService.saveOrUpdate(produto);
-        return ResponseEntity.ok(produto);
+        HttpEntity<Produto> request = new HttpEntity<>(produto);
+        Produto prod = restTemplate.postForObject(WALKTHROUGHJAVA_API, request, Produto.class);
+        return ResponseEntity.ok(prod);
     }
 }

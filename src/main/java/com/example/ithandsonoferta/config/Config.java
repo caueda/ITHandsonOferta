@@ -1,6 +1,8 @@
 package com.example.ithandsonoferta.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -13,5 +15,10 @@ public class Config  implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:4200","http://localhost:4300")
                 .allowedHeaders("Origin", "X-Requested-With", "Content-Type", "Accept",
                         "Access-Control-Allow-Headers", "access-control-allow-origin");
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }
