@@ -1,11 +1,11 @@
 package com.example.ithandsonoferta.service;
 
 import com.example.ithandsonoferta.domain.mongodb.Oferta;
+import com.example.ithandsonoferta.enumerators.Situacao;
 import com.example.ithandsonoferta.repository.OfertaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OfertaServiceImpl implements OfertaService {
@@ -16,14 +16,28 @@ public class OfertaServiceImpl implements OfertaService {
     }
 
     @Override
-    public List<Oferta> findAll() {
+    public List<Oferta> findAllBySituacao(Situacao situacao) {
         List<Oferta> ofertas = new ArrayList<>();
-        this.ofertaRepository.findAll().forEach(ofertas::add);
+        this.ofertaRepository.findAllBySituacao(Situacao.ATIVO)
+                .orElse(Collections.emptyList()).forEach(ofertas::add);
         return ofertas;
     }
 
     @Override
     public Oferta saveOrUpdate(Oferta oferta) {
+        findByProdutoIdAndSituacaoAtivo(oferta.getProdutoId()).map(ofertaCadastrada -> {
+            if(!Objects.isNull(ofertaCadastrada)) {
+                ofertaCadastrada.setSituacao(Situacao.INATIVO);
+                this.ofertaRepository.save(ofertaCadastrada);
+            }
+            return ofertaCadastrada;
+        });
+        oferta.setSituacao(Situacao.ATIVO);
         return this.ofertaRepository.save(oferta);
+    }
+
+    @Override
+    public Optional<Oferta> findByProdutoIdAndSituacaoAtivo(String produtoId) {
+        return this.ofertaRepository.findByProdutoIdAndSituacao(produtoId, Situacao.ATIVO);
     }
 }

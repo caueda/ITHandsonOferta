@@ -1,5 +1,6 @@
 package com.example.ithandsonoferta.domain.mongodb;
 
+import com.example.ithandsonoferta.enumerators.Situacao;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +19,5 @@ public class Oferta {
     private String imageProdutoUrl;
     private Double desconto;
     private String mensagem;
-    private String situacao;
+    private Situacao situacao;
 }

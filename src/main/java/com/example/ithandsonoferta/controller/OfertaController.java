@@ -1,6 +1,7 @@
 package com.example.ithandsonoferta.controller;
 
 import com.example.ithandsonoferta.domain.mongodb.Oferta;
+import com.example.ithandsonoferta.enumerators.Situacao;
 import com.example.ithandsonoferta.service.OfertaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class OfertaController {
 
     @GetMapping
     public ResponseEntity<List<Oferta>> findAll() {
-        return ResponseEntity.of(Optional.ofNullable(ofertaService.findAll()));
+        return ResponseEntity.of(Optional.ofNullable(ofertaService.findAllBySituacao(Situacao.ATIVO)));
     }
 
     @PostMapping
